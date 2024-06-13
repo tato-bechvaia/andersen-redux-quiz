@@ -9,6 +9,7 @@ const quizQuestionsSlice = createSlice({
   reducers: {
     setQuizQuestions: (state, action) => {
       state.questions = action.payload;
+      state.answers = {};
     },
     setAnswer: (state, action) => {
       const { questionId, answer } = action.payload;
@@ -20,7 +21,7 @@ const quizQuestionsSlice = createSlice({
     },
     resetAnswers: state => {
       state.answers = {};
-    }
+    },
   },
 });
 

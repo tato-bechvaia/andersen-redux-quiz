@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { setQuizQuestions } from '../redux/slices/quizQuestionsSlice';
+import { setQuizConfig } from '../redux/slices/quizConfigSlice';
 import styled from 'styled-components';
 import he from 'he';
 
@@ -71,7 +72,7 @@ const QuizConfig = () => {
   const navigate = useNavigate();
   const [config, setConfig] = useState({
     numQuestions: 5,
-    category: '9', // Default category ID for General Knowledge
+    category: '9',
     difficulty: 'easy',
     time: 1,
     type: 'multiple',
@@ -84,9 +85,10 @@ const QuizConfig = () => {
       [name]: value,
     });
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(setQuizConfig(config));
     try {
       const response = await axios.get(`https://opentdb.com/api.php?amount=${config.numQuestions}&category=${config.category}&difficulty=${config.difficulty}&type=${config.type}`);
       const { results } = response.data;
@@ -102,7 +104,7 @@ const QuizConfig = () => {
       console.error('Error fetching quiz questions:', error);
     }
   };
-
+  
   return (
     <Container>
       <FormContainer>
