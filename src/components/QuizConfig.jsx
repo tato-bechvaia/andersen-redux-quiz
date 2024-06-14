@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { setQuizQuestions } from '../redux/slices/quizQuestionsSlice';
+import { resetQuiz } from '../redux/slices/quizQuestionsSlice';
 import { setQuizConfig } from '../redux/slices/quizConfigSlice';
 import styled from 'styled-components';
-import he from 'he';
+import { fetchQuizQuestions } from '../middlewares/quizMiddleware';
+import { useEffect } from 'react';
 
 const Container = styled.div`
   display: flex;
@@ -78,6 +78,10 @@ const QuizConfig = () => {
     type: 'multiple',
   });
 
+  useEffect(() => {
+    dispatch(resetQuiz());
+  }, [dispatch]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setConfig({
@@ -89,16 +93,9 @@ const QuizConfig = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(setQuizConfig(config));
+
     try {
-      const response = await axios.get(`https://opentdb.com/api.php?amount=${config.numQuestions}&category=${config.category}&difficulty=${config.difficulty}&type=${config.type}`);
-      const { results } = response.data;
-      const formattedQuestions = results.map((question, index) => ({
-        id: index,
-        question: he.decode(question.question),
-        options: [...question.incorrect_answers.map(answer => he.decode(answer)), he.decode(question.correct_answer)].sort(),
-        answer: he.decode(question.correct_answer),
-      }));
-      dispatch(setQuizQuestions(formattedQuestions));
+      dispatch(fetchQuizQuestions(config));
       navigate('/quiz');
     } catch (error) {
       console.error('Error fetching quiz questions:', error);

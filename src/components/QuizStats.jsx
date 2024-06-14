@@ -1,4 +1,3 @@
-// QuizStats.jsx
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Bar, Doughnut, Line } from 'react-chartjs-2';
@@ -6,8 +5,6 @@ import { Chart as ChartJS, ArcElement, CategoryScale, LinearScale, BarElement, L
 import {useNavigate} from 'react-router-dom';
 
 ChartJS.register(ArcElement, CategoryScale, LinearScale, BarElement, LineElement, PointElement, Title, Tooltip, Legend);
-
-
 
 const Container = styled.div`
     display: flex;
@@ -44,7 +41,6 @@ const QuizStats = () => {
     const quizStats = useSelector(state => state.quizStats.quizes);
     const correctAnswersSum = quizStats.map(quiz => quiz.score).reduce((a, b) => a +b, 0);
     const incorrectAnswersSum = quizStats.map(quiz => quiz.numberOfQuestions - quiz.score).reduce((a, b) => a + b, 0);
-
     const chartLabels = quizStats.map((_, i) => `Quiz-${i+1}`)
     console.log(chartLabels);
     const navigate = useNavigate();
@@ -104,7 +100,7 @@ const QuizStats = () => {
             },
           },
         },
-      };
+    };
 
     const doughnutData = {
         labels: ['Correct Answers', 'Incorrect Answers'],
@@ -116,7 +112,7 @@ const QuizStats = () => {
             }
         ]
     }
-
+    
     const handleNewQuiz = () => {
         navigate('/');
     }
