@@ -1,4 +1,3 @@
-// quizMiddleware.js
 import axios from 'axios';
 import { setQuizQuestions } from '../redux/slices/quizQuestionsSlice';
 import he from 'he';

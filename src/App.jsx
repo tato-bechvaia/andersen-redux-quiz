@@ -5,18 +5,21 @@ import Quiz from './components/Quiz';
 import './index.css';
 import QuizResults from './components/QuizResults';
 import QuizStats from './components/QuizStats';
-import store from './redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './redux/store';
 
 const App = () => (
   <Provider store={store}>
-    <Router>
-      <Routes>
-        <Route path="/" element={<QuizConfig />} />
-        <Route path="/quiz" element={<Quiz />} />
-        <Route path="/results" element={<QuizResults />} />
-        <Route path="/stats" element={<QuizStats />} />
-      </Routes>
-    </Router>
+    <PersistGate loading={null} persistor={persistor}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<QuizConfig /> } />
+          <Route path="/quiz" element={<Quiz />} />
+          <Route path="/results" element={<QuizResults />} />
+          <Route path="/stats" element={<QuizStats />} />
+        </Routes>
+      </Router>
+    </PersistGate>
   </Provider>
 );
 

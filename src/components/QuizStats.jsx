@@ -19,7 +19,6 @@ const ChartContainer = styled.div`
     margin: 20px 0;
 `;
 
-
 const ButtonContainer = styled.div`
     position: absolute;
     left: 20px;
@@ -112,7 +111,7 @@ const QuizStats = () => {
             }
         ]
     }
-    
+
     const handleNewQuiz = () => {
         navigate('/');
     }
